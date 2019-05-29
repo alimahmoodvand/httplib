@@ -18,9 +18,13 @@ import java.util.ArrayList;
  */
 
 public class CallAPI extends AsyncTask<String, String, String> {
-
-    public CallAPI(){
-        //set context variables if required
+    private String url="";
+    private String method="POST";
+    private String data="";
+    public CallAPI(String data,String url,String method){
+        this.url=url;
+        this.method=method;
+        this.data=data;
     }
 
     @Override
@@ -36,13 +40,13 @@ public class CallAPI extends AsyncTask<String, String, String> {
         HttpURLConnection httpURLConnection = null;
         try {
 
-            httpURLConnection = (HttpURLConnection) new URL(params[0]).openConnection();
-            httpURLConnection.setRequestMethod("POST");
+            httpURLConnection = (HttpURLConnection) new URL(this.url).openConnection();
+            httpURLConnection.setRequestMethod(this.method);
 
             httpURLConnection.setDoOutput(true);
 
             DataOutputStream wr = new DataOutputStream(httpURLConnection.getOutputStream());
-            wr.writeBytes("PostData=" + params[1]);
+            wr.writeBytes("PostData=" +this.data);
             wr.flush();
             wr.close();
 
